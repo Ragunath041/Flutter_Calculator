@@ -103,14 +103,14 @@ class _CalculatorState extends State<Calculator> {
       // appBar: AppBar(
       //   title: const Text("Flutter Calculator"),
       // ),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: ListView(
         children: [
           Container(
   padding: const EdgeInsets.all(25.0),
   alignment: Alignment.centerRight,
   decoration: BoxDecoration(
-    color: Color.fromARGB(255, 255, 255, 255),
+    color: const Color.fromARGB(255, 255, 255, 255),
     borderRadius: BorderRadius.circular(15.0),
   ),
   child: Text(
@@ -141,12 +141,12 @@ class _CalculatorState extends State<Calculator> {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: buttons.map((buttonText) {
-        Color buttonColor = Color.fromARGB(255, 255, 255, 255);
-        Color textColor = Color.fromARGB(255, 8, 0, 0); // Default text color
+        Color buttonColor = const Color.fromARGB(255, 255, 255, 255);
+        Color textColor = const Color.fromARGB(255, 8, 0, 0); // Default text color
 
         // Set a different text color for specific buttons
         if (buttonText == "+" || buttonText == "-" || buttonText == "X" || buttonText == "/" || buttonText == "Percentage" || buttonText == "Modulus") {
-          textColor = Color.fromARGB(255, 0, 0, 255); // Blue text color
+          textColor = const Color.fromARGB(255, 0, 0, 255); // Blue text color
         }
 
         return Expanded(
@@ -158,7 +158,7 @@ class _CalculatorState extends State<Calculator> {
               },
               style: TextButton.styleFrom(
                 backgroundColor: buttonColor,
-                shadowColor: Color.fromARGB(255, 168, 154, 154),
+                shadowColor: const Color.fromARGB(255, 168, 154, 154),
                 elevation: 3,
               ),
               child: Text(
