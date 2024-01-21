@@ -1,6 +1,5 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart' show Alignment, BorderRadius, BoxDecoration, BuildContext, Colors, Column, Container, EdgeInsets, Expanded, FocusScope, FontWeight, Key, ListView, MainAxisAlignment, MaterialApp, Padding, RoundedRectangleBorder, Row, Scaffold, SizedBox, State, StatefulWidget, StatelessWidget, Text, TextButton, TextStyle, ThemeData, Widget, runApp;
 void main() {
   runApp(const MyApp());
 }
@@ -64,7 +63,7 @@ class _CalculatorState extends State<Calculator> {
           case "/":
             output = (num1 / num2).toString();
             break;
-          case "Modulus":
+          case "M%":
             output = (num1 % num2).toString();
             break;
         }
@@ -72,12 +71,12 @@ class _CalculatorState extends State<Calculator> {
         num2 = 0.0;
         operand = "";
       });
-    } else if (buttonText == "Percentage") {
+    } else if (buttonText == "%") {
       setState(() {
         double a = double.parse(output);
         output = (a / 100).toString();
       });
-    } else if (buttonText == "Modulus") {
+    } else if (buttonText == "M%") {
       setState(() {
         num1 = double.parse(output);
         operand = buttonText;
@@ -93,80 +92,103 @@ class _CalculatorState extends State<Calculator> {
       });
     }
     FocusScope.of(context).unfocus();
-
-    // After processing the button press, hide the keyboard
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("Flutter Calculator"),
-      // ),
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: ListView(
+      backgroundColor: Colors.black,
+
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Container(
-  padding: const EdgeInsets.all(25.0),
-  alignment: Alignment.centerRight,
-  decoration: BoxDecoration(
-    color: const Color.fromARGB(255, 255, 255, 255),
-    borderRadius: BorderRadius.circular(15.0),
-  ),
-  child: Text(
-    output,
-    style: const TextStyle(
-      fontSize: 36.0,
-      fontWeight: FontWeight.bold,
-      color:  Color.fromARGB(255, 0, 0, 255),
-    ),
-  ),
-),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(20.0),
+              alignment: Alignment.bottomRight,
+              // decoration: BoxDecoration(
+              //   gradient: LinearGradient(
+              //     colors: [Colors.blue.shade700, Colors.blue.shade500],
+              //     begin: Alignment.bottomCenter,
+              //     end: Alignment.bottomRight,
+              //   ),
+              //   borderRadius: BorderRadius.circular(20),
+              // ),
+                        
+              
+              child: Text(
+                output,
+                style: const TextStyle(
+                  fontSize: 36.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
 
           const SizedBox(height: 200),
-          buildButtonRow(["1", "2", "3", "+"]),
-          buildButtonRow(["4", "5", "6", "-"]),
-          buildButtonRow(["7", "8", "9", "X"]),
-          buildButtonRow(["0", "C", "=", "/"]),
-          buildButtonRow(["Percentage", "Modulus"]),
-          // Add some extra space at the bottom to accommodate the keyboard
+          buildNumberButtonRow(["M%", "%", "C", "/"]),
+          buildNumberButtonRow(["7", "8", "9", "X"]),
+          buildNumberButtonRow(["4", "5", "6", "-"]),
+          buildNumberButtonRow(["1", "2", "3", "+"]),
+          buildNumberButtonRow(["0", "="]),
         ],
       ),
     );
   }
 
- Widget buildButtonRow(List<String> buttons) {
-  return Container(
-    margin: const EdgeInsets.symmetric(vertical: 10.0),
+  Widget buildNumberButtonRow(List<String> buttons) {
+  return Expanded(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: buttons.map((buttonText) {
-        Color buttonColor = const Color.fromARGB(255, 255, 255, 255);
-        Color textColor = const Color.fromARGB(255, 8, 0, 0); // Default text color
-
-        // Set a different text color for specific buttons
-        if (buttonText == "+" || buttonText == "-" || buttonText == "X" || buttonText == "/" || buttonText == "Percentage" || buttonText == "Modulus") {
-          textColor = const Color.fromARGB(255, 0, 0, 255); // Blue text color
+        Color buttonColor;
+        
+        switch (buttonText) {
+          case "0":
+          case "1":
+          case "2":
+          case "3":
+          case "4":
+          case "5":
+          case "6":
+          case "7":
+          case "8":
+          case "9":
+            buttonColor = const Color.fromARGB(255, 10, 1, 0);
+            break;
+          // case "=":
+          //   buttonColor = const Color.fromARGB(255, 211, 211, 211);
+          //   break;
+          case "C":
+            buttonColor = const Color.fromARGB(255, 250, 9, 9);
+            break;
+          default:
+            buttonColor = Colors.orange; // Default color for other buttons
+            break;
         }
 
         return Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextButton(
+            child: ElevatedButton(
               onPressed: () {
                 buttonPressed(buttonText);
               },
-              style: TextButton.styleFrom(
-                backgroundColor: buttonColor,
-                shadowColor: const Color.fromARGB(255, 168, 154, 154),
-                elevation: 3,
+              style: ElevatedButton.styleFrom(
+                primary: buttonColor,
+                padding: const EdgeInsets.all(20.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
               ),
               child: Text(
                 buttonText,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
-                  color: textColor,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -176,9 +198,4 @@ class _CalculatorState extends State<Calculator> {
     ),
   );
 }
-
-
-
-
-
 }
